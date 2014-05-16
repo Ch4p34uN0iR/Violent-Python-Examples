@@ -58,15 +58,13 @@ def printMessages(skypeDB):
     print '\n[*] -- Found Messages --'
 
     for row in c:
-        try:
             if 'partlist' not in (row[3]):
                 if (row[1]) != (row[2]):
                     msgDirection = 'To %s :' % (row[1]) 
                 else:
                     msgDirection = 'From %s :' % (row[2]) 
-                print 'Time: %s %s' + (row[0], row[3]) 
-        except:
-            pass
+                print 'Time: %s %s' % (row[0], row[3]) 
+      
 
 
 def main():
