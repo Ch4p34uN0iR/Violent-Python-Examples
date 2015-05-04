@@ -1,41 +1,47 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
+#IMPORTS
 import zipfile
-import optparse
+import argparse
 from threading import Thread
 
+#FONCTIONS
+#
+def testPassword(zFile, password, verbosity):
+	try:
+		zFile.extractall(pwd=password)
+		print '[+] Success with password = ' + password + '\n'
+	except :
+		if verbosity:
+			print 'Fail with password = ' + password + '\n'
+		pass
+#
+def main():	
 
-def extractFile(zFile, password):
-    try:
-        zFile.extractall(pwd=password)
-        print '[+] Found password ' + password + '\n'
-    except:
-        pass
+	#Defining args
+	parser = argparse.ArgumentParser()
+	parser.add_argument("zname", help="specify zip file")
+	parser.add_argument("dname", help="specify dictionary file")
+	parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
+	
+	#Check if args are given
+	args = parser.parse_args()
+	if (args.zname == None) | (args.dname == None):
+		print parser.usage
+		exit(0)
+	else:
+		zname = args.zname 
+		dname = args.dname
+		verbosity = args.verbose
 
+	print 'Intialisation...'
+	
+	zFile = zipfile.ZipFile(zname)
+	dictionary = open(dname)
 
-def main():
-    parser = optparse.OptionParser("usage %prog "+\
-      "-f <zipfile> -d <dictionary>")
-    parser.add_option('-f', dest='zname', type='string',\
-      help='specify zip file')
-    parser.add_option('-d', dest='dname', type='string',\
-      help='specify dictionary file')
-    (options, args) = parser.parse_args()
-    if (options.zname == None) | (options.dname == None):
-        print parser.usage
-        exit(0)
-    else:
-        zname = options.zname
-        dname = options.dname
-
-    zFile = zipfile.ZipFile(zname)
-    passFile = open(dname)
-
-    for line in passFile.readlines():
-        password = line.strip('\n')
-        t = Thread(target=extractFile, args=(zFile, password))
-        t.start()
-
-
+	for line in dictionary.readlines():
+		password = line.strip('\n')
+		thread = Thread(target=testPassword, args=(zFile, password, verbosity))
+		thread.start()
+			
+#Proper Launcher
 if __name__ == '__main__':
-    main()
+	main()
