@@ -1,5 +1,5 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python2
+
 import optparse
 import pxssh
 
@@ -31,7 +31,7 @@ def botnetCommand(command):
     for client in botNet:
         output = client.send_command(command)
         print '[*] Output from ' + client.host
-        print '[+] ' + output 
+        print '[+] ' + output
 
 
 def addClient(host, user, password):

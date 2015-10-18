@@ -1,5 +1,4 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python2
 
 import optparse
 from socket import *
@@ -21,7 +20,7 @@ def connScan(tgtHost, tgtPort):
         print '[-] %d/tcp closed' % tgtPort
     finally:
 	screenLock.release()
-	connSkt.close()	
+	connSkt.close()
 
 def portScan(tgtHost, tgtPorts):
     try:

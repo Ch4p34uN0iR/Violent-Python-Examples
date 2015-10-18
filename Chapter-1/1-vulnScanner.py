@@ -1,5 +1,4 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python2
 import socket
 import os
 import sys
@@ -38,7 +37,7 @@ def main():
             print '[-] ' + filename +\
                 ' access denied.'
             exit(0)
-    else:   
+    else:
         print '[-] Usage: ' + str(sys.argv[0]) +\
             ' <vuln filename>'
         exit(0)

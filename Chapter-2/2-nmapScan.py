@@ -1,3 +1,5 @@
+#!/usr/bin/env python2
+
 import nmap
 import optparse
 
@@ -14,12 +16,12 @@ def main():
                       help='specify target host')
     parser.add_option('-p', dest='tgtPort', type='string',\
                       help='specify target port[s] separated by comma')
-    
+
     (options, args) = parser.parse_args()
-    
+
     tgtHost = options.tgtHost
     tgtPorts = str(options.tgtPort).split(',')
-    
+
     if (tgtHost == None) | (tgtPorts[0] == None):
         print parser.usage
         exit(0)
