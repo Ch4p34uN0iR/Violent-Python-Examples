@@ -4,7 +4,7 @@ import dpkt
 import socket
 import pygeoip
 import optparse
-gi = pygeoip.GeoIP('/opt/GeoIP/Geo.dat')
+gi = pygeoip.GeoIP('Geo.dat')
 
 
 def retKML(ip):
