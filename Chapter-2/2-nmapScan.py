@@ -1,5 +1,7 @@
 import nmap
 import optparse
+from socket import gethostbyname
+from re import compile, search
 
 def nmapScan(tgtHost,tgtPort):
     nmScan = nmap.PortScanner()
@@ -8,12 +10,9 @@ def nmapScan(tgtHost,tgtPort):
     print "[*] " + tgtHost + " tcp/"+tgtPort +" "+state
 
 def main():
-    parser = optparse.OptionParser('usage %prog '+\
-                                   '-H <target host> -p <target port>')
-    parser.add_option('-H', dest='tgtHost', type='string',\
-                      help='specify target host')
-    parser.add_option('-p', dest='tgtPort', type='string',\
-                      help='specify target port[s] separated by comma')
+    parser = optparse.OptionParser('usage %prog -H <target host> -p <target port>')
+    parser.add_option('-H', dest='tgtHost', type='string', help='specify target host')
+    parser.add_option('-p', dest='tgtPort', type='string', help='specify target port[s] separated by comma')
     
     (options, args) = parser.parse_args()
     
@@ -23,10 +22,13 @@ def main():
     if (tgtHost == None) | (tgtPorts[0] == None):
         print parser.usage
         exit(0)
+
+    if(compile("\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}").search(tgtHost) == None):
+        tgtHost = gethostbyname(tgtHost)
+
     for tgtPort in tgtPorts:
         nmapScan(tgtHost, tgtPort)
 
 
 if __name__ == '__main__':
     main()
-
